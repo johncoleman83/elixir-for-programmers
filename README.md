@@ -1,6 +1,7 @@
-# Dictionary
+# Hangman Tutorial
 
-**TODO: Add description**
+- from: https://codestool.coding-gnome.com/
+- example: https://github.com/pragdave/e4p-code
 
 ## Installation
 
@@ -19,3 +20,6 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/dictionary](https://hexdocs.pm/dictionary).
 
+# Author
+
+- David John Coleman II, (http://davidjohncoleman.com)
