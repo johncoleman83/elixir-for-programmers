@@ -27,4 +27,5 @@ defmodule Dictionary do
     |> elem(1)
     |> String.split(~r/\n/)
   end
+
 end
