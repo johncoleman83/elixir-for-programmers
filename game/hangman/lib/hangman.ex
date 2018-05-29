@@ -13,6 +13,7 @@ defmodule Hangman do
 
   """
   def hello do
-    :world
+    Dictionary.random_word()
+    |> IO.puts
   end
 end
