@@ -22,7 +22,8 @@ defmodule Dictionary do
   end
 
   def word_list do
-    "./assets/words.txt"
+    "../assets/words.txt"
+    |> Path.expand(__DIR__)
     |> File.read()
     |> elem(1)
     |> String.split(~r/\n/)
