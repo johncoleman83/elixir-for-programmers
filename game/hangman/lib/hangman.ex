@@ -3,17 +3,16 @@ defmodule Hangman do
   Documentation for Hangman.
   """
 
+  alias Hangman.Game, as: Game
+
   @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Hangman.hello
-      :world
-
+  Hello World.
+      iex> Hangman.name
+      "Hangman module!"
   """
-  def hello do
-    Dictionary.random_word()
-    |> IO.puts
+  def name do
+    "Hangman module!"
   end
+
+  defdelegate new_game(), to: Game, as: :init_game
 end
