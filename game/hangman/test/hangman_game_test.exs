@@ -33,4 +33,22 @@ defmodule HangmanGameTest do
     end
   end
 
+  test "first occurrence of letter is not already used" do
+    game = Game.init_game()
+
+    assert MapSet.member?(game.used, "n") == false
+    { game, _tally } = Game.make_move(game, "n")
+    assert game.game_state != :already_used
+    assert MapSet.member?(game.used, "n")
+  end
+
+  test "second occurrence of letter is already used" do
+    game = Game.init_game()
+    { game, _tally } = Game.make_move(game, "n")
+
+    assert game.game_state != :already_used
+    { game, _tally } = Game.make_move(game, "n")
+    assert game.game_state == :already_used
+  end
+
 end
