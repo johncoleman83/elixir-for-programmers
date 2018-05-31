@@ -5,15 +5,11 @@ defmodule Dictionary do
 
   @doc """
   Hello world.
-
-  ## Examples
-
-      iex> Dictionary.hello
-      :world
-
+      iex> Dictionary.name
+      "elixir for programmers method!"
   """
   def name do
-    IO.puts "elixir for programmers method!"
+    "Dictionary!"
   end
 
   def random_word do
