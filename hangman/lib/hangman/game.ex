@@ -11,8 +11,7 @@ defmodule Hangman.Game do
     used:       MapSet.new()
   )
 
-  def init_game() do
-    word = Dictionary.random_word()
+  def init_game(word) do
     %Hangman.Game{
       word:    word,
       letters: word
@@ -21,15 +20,23 @@ defmodule Hangman.Game do
     }
   end
 
+  def init_game() do
+    Dictionary.random_word()
+    |> init_game()
+  end
+
   def make_move(game = %{ game_state: state }, _guess) when state in [ :won, :lost ] do
-    game
-    #{ game, tally(game) }
+    #game
+    { game, tally(game) }
   end
 
   def make_move(game, guess) do
+    #IO.puts game.word
+    #IO.puts guess
+    #IO.puts game.used
     game = accept_move(game, guess, MapSet.member?(game.used, guess))
-    game
-    #{ game, tally(game) }
+    #game
+    { game, tally(game) }
   end
 
   def accept_move(game, guess, _already_guessed = true) do
