@@ -49,13 +49,13 @@ defmodule Hangman.Game do
 
   def reveal_word(game) do
     for letter <- game.word do
-      letter |> should_not_reveal(MapSet.member?(game.letters, letter))
+      letter |> should_reveal(MapSet.member?(game.letters, letter))
     end
     |> List.to_string()
   end
 
-  def should_not_reveal(letter, _keep_hidden = true),  do: "_"
-  def should_not_reveal(letter, _keep_hidden = false), do: letter
+  def should_reveal(letter, _unguessed = true),  do: "_"
+  def should_reveal(letter, _unguessed = false), do: letter
 
   def accept_move(game, guess, _already_guessed = true) do
     Map.put(game, :game_state, :already_used)
