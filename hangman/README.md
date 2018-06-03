@@ -19,3 +19,16 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/hangman](https://hexdocs.pm/hangman).
 
+## Usage
+
+```
+$ cd hangman
+$ mix deps.get
+```
+
+# Tests
+
+```
+$ cd hangman
+$ mix test
+```
