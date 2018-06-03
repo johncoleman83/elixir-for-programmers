@@ -56,6 +56,8 @@ defmodule HangmanGameTest do
     # letters = [ "b", "c", "d", "e"
     #for letter <- letters do
     #  { game, _tally } = Game.make_move(game, letter)
+    #  assert game.game_state == :correct_guess
+    #  assert game.turns_left == 7
     #end
     { game, _tally } = Game.make_move(game, "b")
     { game, _tally } = Game.make_move(game, "c")
@@ -72,11 +74,21 @@ defmodule HangmanGameTest do
     # letters = [ "n", "a", "r", "w" ]
     #for letter <- letters do
     #  { game, _tally } = Game.make_move(game, letter)
+    #  assert game.game_state == :correct_guess
+    #  assert game.turns_left == 7
     #end
     { game, _tally } = Game.make_move(game, "n")
+    assert game.game_state == :correct_guess
+    assert game.turns_left == 7
     { game, _tally } = Game.make_move(game, "a")
+    assert game.game_state == :correct_guess
+    assert game.turns_left == 7
     { game, _tally } = Game.make_move(game, "r")
+    assert game.game_state == :correct_guess
+    assert game.turns_left == 7
     { game, _tally } = Game.make_move(game, "w")
+    assert game.game_state == :correct_guess
+    assert game.turns_left == 7
 
     assert game.used == MapSet.new(["n", "a", "r", "w"])
   end
@@ -86,15 +98,27 @@ defmodule HangmanGameTest do
     # letters = [ "n", "a", "r", "w", "h", "l" ]
     #for letter <- letters do
     #  { game, _tally } = Game.make_move(game, letter)
+    #  assert game.game_state == :correct_guess
+    #  assert game.turns_left == 7
     #end
     { game, _tally } = Game.make_move(game, "n")
+    assert game.game_state == :correct_guess
+    assert game.turns_left == 7
     { game, _tally } = Game.make_move(game, "a")
+    assert game.game_state == :correct_guess
+    assert game.turns_left == 7
     { game, _tally } = Game.make_move(game, "r")
+    assert game.game_state == :correct_guess
+    assert game.turns_left == 7
     { game, _tally } = Game.make_move(game, "w")
+    assert game.game_state == :correct_guess
+    assert game.turns_left == 7
     { game, _tally } = Game.make_move(game, "h")
+    assert game.game_state == :correct_guess
+    assert game.turns_left == 7
     { game, _tally } = Game.make_move(game, "l")
-
     assert game.game_state == :won
+    assert game.turns_left == 7
   end
 
   test "a correct guess is recognized" do
@@ -102,6 +126,7 @@ defmodule HangmanGameTest do
     { game, _tally } = Game.make_move(game, "n")
 
     assert game.game_state == :correct_guess
+    assert game.turns_left == 7
   end
 
   test "an incorrect guess is recognized" do
@@ -109,6 +134,7 @@ defmodule HangmanGameTest do
     { game, _tally } = Game.make_move(game, "z")
 
     assert game.game_state == :incorrect_guess
+    assert game.turns_left == 7
   end
 
 end
