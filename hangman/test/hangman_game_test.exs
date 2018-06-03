@@ -19,10 +19,12 @@ defmodule HangmanGameTest do
     game = Game.init_game()
     word = game.letters
 
-    assert word |> MapSet.size > 0
-    for i <- word do
-      assert 122 <= String.to_charlist(i) >= 97
+    all_lower_alpha = for i <- word do
+      122 <= String.to_charlist(i) >= 97
     end
+
+    assert word |> MapSet.size > 0
+    assert Enum.all?(all_lower_alpha)
   end
 
   test "state isn't changed once game is won or lost" do
@@ -53,12 +55,7 @@ defmodule HangmanGameTest do
 
   test "second occurrence of letter is already used after various other guesses" do
     game = Game.init_game("narwhals")
-    # letters = [ "b", "c", "d", "e"
-    #for letter <- letters do
-    #  { game, _tally } = Game.make_move(game, letter)
-    #  assert game.game_state == :correct_guess
-    #  assert game.turns_left == 7
-    #end
+    # letters = [ "b", "c", "d", "e" ]
     { game, _tally } = Game.make_move(game, "b")
     { game, _tally } = Game.make_move(game, "c")
     { game, _tally } = Game.make_move(game, "d")
@@ -72,11 +69,6 @@ defmodule HangmanGameTest do
   test "after various guesses, all guesses are stored in used attribute" do
     game = Game.init_game("narwhals")
     # letters = [ "n", "a", "r", "w" ]
-    #for letter <- letters do
-    #  { game, _tally } = Game.make_move(game, letter)
-    #  assert game.game_state == :correct_guess
-    #  assert game.turns_left == 7
-    #end
     { game, _tally } = Game.make_move(game, "n")
     assert game.game_state == :correct_guess
     assert game.turns_left == 7
@@ -96,11 +88,7 @@ defmodule HangmanGameTest do
   test "after entire word guessed, game state is won" do
     game = Game.init_game("narwhal")
     # letters = [ "n", "a", "r", "w", "h", "l" ]
-    #for letter <- letters do
-    #  { game, _tally } = Game.make_move(game, letter)
-    #  assert game.game_state == :correct_guess
-    #  assert game.turns_left == 7
-    #end
+
     { game, _tally } = Game.make_move(game, "n")
     assert game.game_state == :correct_guess
     assert game.turns_left == 7
