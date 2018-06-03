@@ -109,6 +109,33 @@ defmodule HangmanGameTest do
     assert game.turns_left == 7
   end
 
+  test "after game is lost, game state should be lost" do
+    game = Game.init_game("narwhal")
+    # letters = [ "n", "a", "r", "w", "h", "l" ]
+
+    { game, _tally } = Game.make_move(game, "b")
+    assert game.game_state == :incorrect_guess
+    assert game.turns_left == 6
+    { game, _tally } = Game.make_move(game, "c")
+    assert game.game_state == :incorrect_guess
+    assert game.turns_left == 5
+    { game, _tally } = Game.make_move(game, "d")
+    assert game.game_state == :incorrect_guess
+    assert game.turns_left == 4
+    { game, _tally } = Game.make_move(game, "e")
+    assert game.game_state == :incorrect_guess
+    assert game.turns_left == 3
+    { game, _tally } = Game.make_move(game, "f")
+    assert game.game_state == :incorrect_guess
+    assert game.turns_left == 2
+    { game, _tally } = Game.make_move(game, "g")
+    assert game.game_state == :incorrect_guess
+    assert game.turns_left == 1
+    { game, _tally } = Game.make_move(game, "i")
+    assert game.game_state == :lost
+    assert game.turns_left == 0
+  end
+
   test "a correct guess is recognized" do
     game = Game.init_game("narwhal")
     { game, _tally } = Game.make_move(game, "n")
@@ -122,7 +149,7 @@ defmodule HangmanGameTest do
     { game, _tally } = Game.make_move(game, "z")
 
     assert game.game_state == :incorrect_guess
-    assert game.turns_left == 7
+    assert game.turns_left == 6
   end
 
 end

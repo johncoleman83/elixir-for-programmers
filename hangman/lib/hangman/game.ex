@@ -31,9 +31,6 @@ defmodule Hangman.Game do
   end
 
   def make_move(game, guess) do
-    #IO.puts game.word
-    #IO.puts guess
-    #IO.puts game.used
     game = accept_move(game, guess, MapSet.member?(game.used, guess))
     #game
     { game, tally(game) }
@@ -53,8 +50,18 @@ defmodule Hangman.Game do
     |> maybe_won()
   end
 
-  def score_guess(game, _guess, _correct_guess = false) do
-    Map.put(game, :game_state, :incorrect_guess)
+  def score_guess(game = %{ turns_left: 1 }, _guess, _correct_guess = false) do
+    %{  game |
+        game_state: :lost,
+        turns_left: 0
+      }
+  end
+
+  def score_guess(game = %{ turns_left: this_turns_left }, _guess, _correct_guess = false) do
+    %{  game |
+        game_state: :incorrect_guess,
+        turns_left: this_turns_left - 1
+      }
   end
 
   def maybe_won(game) do
