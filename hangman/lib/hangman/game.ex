@@ -89,8 +89,7 @@ defmodule Hangman.Game do
   defp reveal_word(game) do
     for letter <- game.word do
       letter |> should_reveal(MapSet.member?(game.letters, letter))
-    end
-    |> List.to_string()
+    end |> List.to_string()
   end
 
   defp should_reveal(letter, _unguessed = true),  do: "_"
