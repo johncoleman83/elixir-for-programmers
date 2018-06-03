@@ -6,16 +6,17 @@ defmodule Hangman.Game do
   defstruct(
     turns_left: 7,
     game_state: :initializing,
-    word:       "",
+    word:       [],
     letters:    MapSet.new(),
     used:       MapSet.new()
   )
 
+  # PUBLIC
   def init_game(word) do
     %Hangman.Game{
-      word:    word,
+      word:    word |> String.codepoints(),
       letters: word
-      |> String.codepoints
+      |> String.codepoints()
       |> MapSet.new()
     }
   end
@@ -26,15 +27,35 @@ defmodule Hangman.Game do
   end
 
   def make_move(game = %{ game_state: state }, _guess) when state in [ :won, :lost ] do
-    #game
     { game, tally(game) }
   end
 
   def make_move(game, guess) do
     game = accept_move(game, guess, MapSet.member?(game.used, guess))
-    #game
     { game, tally(game) }
   end
+
+  def tally(game) do
+    %{
+      game_state: game.game_state,
+      turns_left: game.turns_left,
+      letters: game |> reveal_word()
+    }
+  end
+
+
+
+  # PRIVATE
+
+  def reveal_word(game) do
+    for letter <- game.word do
+      letter |> should_not_reveal(MapSet.member?(game.letters, letter))
+    end
+    |> List.to_string()
+  end
+
+  def should_not_reveal(letter, _keep_hidden = true),  do: "_"
+  def should_not_reveal(letter, _keep_hidden = false), do: letter
 
   def accept_move(game, guess, _already_guessed = true) do
     Map.put(game, :game_state, :already_used)
@@ -74,9 +95,5 @@ defmodule Hangman.Game do
 
   def maybe_won_do(game, _won_game = false) do
     Map.put(game, :game_state, :correct_guess)
-  end
-
-  def tally(game) do
-    123
   end
 end
