@@ -31,7 +31,7 @@ defmodule HangmanGameTest do
     for state <- [ :won, :lost ] do
       game = Game.init_game()
       game = Map.put(game, :game_state, state)
-      assert { ^game, _ } = Game.make_move(game, "n")
+      assert ^game = Game.make_move(game, "n")
     end
   end
 
@@ -39,36 +39,35 @@ defmodule HangmanGameTest do
     game = Game.init_game()
 
     assert MapSet.member?(game.used, "n") == false
-    { game, _tally } = Game.make_move(game, "n")
+    game = Game.make_move(game, "n")
     assert game.game_state != :already_used
     assert MapSet.member?(game.used, "n")
   end
 
   test "second occurrence of letter is already used" do
     game = Game.init_game()
-    { game, _tally } = Game.make_move(game, "n")
+    game = Game.make_move(game, "n")
 
     assert game.game_state != :already_used
-    { game, _tally } = Game.make_move(game, "n")
+    game = Game.make_move(game, "n")
     assert game.game_state == :already_used
   end
 
   test "second occurrence of letter is already used after various other guesses" do
     game = Game.init_game("narwhals")
-    # letters = [ "b", "c", "d", "e" ]
-    { game, _tally } = Game.make_move(game, "b")
-    { game, _tally } = Game.make_move(game, "c")
-    { game, _tally } = Game.make_move(game, "d")
-    { game, _tally } = Game.make_move(game, "e")
+    game = Game.make_move(game, "b")
+    game = Game.make_move(game, "c")
+    game = Game.make_move(game, "d")
+    game = Game.make_move(game, "e")
 
     assert game.game_state == :incorrect_guess
-    { game, _tally } = Game.make_move(game, "b")
+    game = Game.make_move(game, "b")
     assert game.game_state == :already_used
   end
 
   test "a correct guess is recognized" do
     game = Game.init_game("narwhal")
-    { game, _tally } = Game.make_move(game, "n")
+    game = Game.make_move(game, "n")
 
     assert game.game_state == :correct_guess
     assert game.turns_left == 7
@@ -76,7 +75,7 @@ defmodule HangmanGameTest do
 
   test "an incorrect guess is recognized" do
     game = Game.init_game("narwhal")
-    { game, _tally } = Game.make_move(game, "z")
+    game = Game.make_move(game, "z")
 
     assert game.game_state == :incorrect_guess
     assert game.turns_left == 6
@@ -87,7 +86,7 @@ defmodule HangmanGameTest do
     moves = [ "n", "a", "r", "w", "h" ]
 
     game = Enum.reduce(moves, game, fn (guess, game) ->
-      { game, _tally } = Game.make_move(game, guess)
+      game = Game.make_move(game, guess)
       assert game.game_state == :correct_guess
       assert game.turns_left == 7
       game
@@ -99,13 +98,13 @@ defmodule HangmanGameTest do
     game = Game.init_game("narwhal")
     moves = [ "n", "a", "r", "w", "h" ]
     game = Enum.reduce(moves, game, fn (guess, game) ->
-      { game, _tally } = Game.make_move(game, guess)
+      game = Game.make_move(game, guess)
       assert game.game_state == :correct_guess
       assert game.turns_left == 7
       game
     end)
 
-    { game, _tally } = Game.make_move(game, "l")
+    game = Game.make_move(game, "l")
     assert game.used == MapSet.new(["n", "a", "r", "w", "h", "l"])
     assert game.letters == MapSet.new()
     assert game.game_state == :won
@@ -124,7 +123,7 @@ defmodule HangmanGameTest do
       { "g", :lost, 0 },
     ]
     game = Enum.reduce(moves, game, fn ({ guess, state, turns_left }, game) ->
-      { game, _tally } = Game.make_move(game, guess)
+      game = Game.make_move(game, guess)
       assert game.game_state == state
       assert game.turns_left == turns_left
       game
