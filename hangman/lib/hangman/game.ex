@@ -3,17 +3,9 @@ defmodule Hangman.Game do
   Documentation for Hangman.Game
   """
 
-  defstruct(
-    turns_left: 7,
-    game_state: :initializing,
-    word:       [],
-    letters:    MapSet.new(),
-    used:       MapSet.new()
-  )
-
   # PUBLIC
   def init_game(word) do
-    %Hangman.Game{
+    %Hangman.State{
       word:    word |> String.codepoints(),
       letters: word
       |> String.codepoints()
@@ -38,7 +30,7 @@ defmodule Hangman.Game do
     %{
       game_state: game.game_state,
       turns_left: game.turns_left,
-      letters: game |> reveal_word()
+      word: game |> reveal_word()
     }
   end
 
