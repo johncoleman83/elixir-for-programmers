@@ -14,7 +14,8 @@ defmodule Hangman.Game do
   end
 
   def init_game() do
-    Dictionary.random_word()
+    Dictionary.start()
+    |> Dictionary.random_word()
     |> init_game()
   end
 
