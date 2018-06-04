@@ -10,7 +10,8 @@ defmodule TextClient.Player do
     continue_with_message(game, "Welcome to Hangman")
   end
 
-  def play(%State{ tally: %{ game_state: :won } }) do
+  def play(game = %State{ tally: %{ game_state: :won } }) do
+    IO.puts "The word: #{game.tally.word}"
     exit_with_message("We got a winner!")
   end
 

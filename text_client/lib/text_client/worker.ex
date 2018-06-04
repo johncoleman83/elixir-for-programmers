@@ -9,6 +9,7 @@ defmodule TextClient.Worker do
     IO.puts [
       "\n",
       "Word so far: #{tally.word}\n",
+      "Your guesses: #{tally.used}\n",
       "Guesses left: #{tally.turns_left}\n"
     ]
   end

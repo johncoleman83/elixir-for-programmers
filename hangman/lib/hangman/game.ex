@@ -30,13 +30,23 @@ defmodule Hangman.Game do
     %{
       game_state: game.game_state,
       turns_left: game.turns_left,
-      word: game |> reveal_word()
+      word:       game |> reveal_word(),
+      used:       game.used |> used_to_string(MapSet.size(game.used))
     }
   end
 
-
   #################################################################################
   # PRIVATE
+
+  defp used_to_string(used, _size = 0) do
+    "None"
+  end
+
+  defp used_to_string(used, _size) do
+    used
+    |> MapSet.to_list()
+    |> Enum.join(", ")
+  end
 
   defp accept_move(game, guess, _already_guessed = true) do
     Map.put(game, :game_state, :already_used)

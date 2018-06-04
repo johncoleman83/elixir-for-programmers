@@ -6,8 +6,8 @@ defmodule Hangman.State do
   defstruct(
     turns_left: 7,
     game_state: :initializing,
-    word:       [],
-    letters:    MapSet.new(),
+    word:       nil,
+    letters:    nil,
     used:       MapSet.new()
   )
 
