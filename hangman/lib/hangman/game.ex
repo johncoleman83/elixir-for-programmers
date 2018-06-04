@@ -77,24 +77,24 @@ defmodule Hangman.Game do
   end
 
   defp maybe_won(game) do
-    maybe_won_do(game, MapSet.size(game.letters) == 0)
+    do_maybe_won(game, MapSet.size(game.letters) == 0)
   end
 
-  defp maybe_won_do(game, _won_game = true) do
+  defp do_maybe_won(game, _won_game = true) do
     Map.put(game, :game_state, :won)
   end
 
-  defp maybe_won_do(game, _won_game = false) do
+  defp do_maybe_won(game, _won_game = false) do
     Map.put(game, :game_state, :correct_guess)
   end
 
   defp reveal_word(game) do
     for letter <- game.word do
-      letter |> should_reveal(MapSet.member?(game.letters, letter))
+      letter |> do_reveal_letter(MapSet.member?(game.letters, letter))
     end |> List.to_string()
   end
 
-  defp should_reveal(letter, _unguessed = true),  do: "_"
-  defp should_reveal(letter, _unguessed = false), do: letter
+  defp do_reveal_letter(letter, _unguessed = true),  do: "_"
+  defp do_reveal_letter(letter, _unguessed = false), do: letter
 
 end
